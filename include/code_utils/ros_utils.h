@@ -3,81 +3,10 @@
 
 #include <cv_bridge/cv_bridge.h>
 #include <eigen3/Eigen/Eigen>
-#include <message_filters/subscriber.h>
-#include <message_filters/sync_policies/approximate_time.h>
 #include <opencv2/opencv.hpp>
-#include <ros/ros.h>
-#include <sensor_msgs/PointCloud2.h>
-#include <sensor_msgs/image_encodings.h>
 
 namespace ros_utils
 {
-
-typedef message_filters::Subscriber< sensor_msgs::Image > ImageSubscriber;
-
-typedef message_filters::sync_policies::ApproximateTime< sensor_msgs::Image, //
-                                                         sensor_msgs::Image >
-AppSync2Images;
-
-typedef message_filters::sync_policies::ApproximateTime< sensor_msgs::Image, //
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image >
-AppSync3Images;
-
-typedef message_filters::sync_policies::ApproximateTime< sensor_msgs::Image, //
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image >
-AppSync4Images;
-
-typedef message_filters::sync_policies::ApproximateTime< sensor_msgs::Image, //
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image >
-AppSync5Images;
-
-typedef message_filters::sync_policies::ApproximateTime< sensor_msgs::Image, //
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image >
-AppSync6Images;
-
-typedef message_filters::sync_policies::ApproximateTime< sensor_msgs::Image, //
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image,
-                                                         sensor_msgs::Image >
-AppSync8Images;
-
-typedef message_filters::Synchronizer< AppSync2Images > App2ImgSynchronizer;
-typedef message_filters::Synchronizer< AppSync3Images > App3ImgSynchronizer;
-typedef message_filters::Synchronizer< AppSync4Images > App4ImgSynchronizer;
-typedef message_filters::Synchronizer< AppSync5Images > App5ImgSynchronizer;
-typedef message_filters::Synchronizer< AppSync6Images > App6ImgSynchronizer;
-typedef message_filters::Synchronizer< AppSync8Images > App8ImgSynchronizer;
-
-template< typename T >
-T
-readParam( ros::NodeHandle& n, std::string name )
-{
-    T ans;
-    if ( n.getParam( name, ans ) )
-    {
-        ROS_INFO_STREAM( "Loaded " << name << ": " << ans );
-    }
-    else
-    {
-        ROS_ERROR_STREAM( "Failed to load " << name );
-        n.shutdown( );
-    }
-    return ans;
-}
 
 inline void
 sendDepthImage( ros::Publisher& pub, const ros::Time timeStamp, const std::string frame_id, const cv::Mat& depth )
